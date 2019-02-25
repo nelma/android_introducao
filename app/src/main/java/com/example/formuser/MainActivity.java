@@ -43,36 +43,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(txtName.getText().toString().isEmpty() || txtLastName.getText().toString().isEmpty()
+                        || txtEmail.getText().toString().isEmpty() || txtPassword.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Todos os campos são obigatórios", Toast.LENGTH_LONG).show();
+                } else {
 
-                if(txtName.getText().toString().matches("")) {
-                    Toast.makeText(MainActivity.this, "Nome é obrigatório", Toast.LENGTH_LONG).show();
+                    UserParcelable userParcelable = new UserParcelable(txtName.getText().toString(), txtLastName.getText().toString(),
+                            txtEmail.getText().toString(), txtPassword.getText().toString());
+
+                    if (intent != null) {
+                        intent.putExtra("NOME", userParcelable.getNome());
+                        intent.putExtra("SOBRENOME", userParcelable.getSobrenome());
+                        intent.putExtra("EMAIL", userParcelable.getEmail());
+                        intent.putExtra("SENHA", userParcelable.getPassword());
+                        setResult(RESULT_OK, intent);
+                        MainActivity.this.finish();
+                    }
                 }
-
-                if(txtLastName.getText().toString().matches("")) {
-                    Toast.makeText(MainActivity.this, "Sobrenome é obrigatório", Toast.LENGTH_LONG).show();
-                }
-
-                if(txtEmail.getText().toString().matches("")) {
-                    Toast.makeText(MainActivity.this, "E-mail é obrigatório", Toast.LENGTH_LONG).show();
-                }
-
-                if(txtPassword.getText().toString().matches("")) {
-                    Toast.makeText(MainActivity.this, "Senha é obrigatório", Toast.LENGTH_LONG).show();
-                }
-
-
-                UserParcelable userParcelable = new UserParcelable(txtName.getText().toString(), txtLastName.getText().toString(),
-                                txtEmail.getText().toString(), txtPassword.getText().toString());
-
-                if (intent != null) {
-                    intent.putExtra("NOME", userParcelable.getNome());
-                    intent.putExtra("SOBRENOME", userParcelable.getSobrenome());
-                    intent.putExtra("EMAIL", userParcelable.getEmail());
-                    intent.putExtra("SENHA", userParcelable.getPassword());
-                    setResult(RESULT_OK, intent);
-                    MainActivity.this.finish();
-                }
-
             }
         });
     }
